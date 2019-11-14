@@ -2,6 +2,7 @@
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour{
 
@@ -21,7 +22,29 @@ public class GameManager : MonoBehaviour{
 
     public void Play()
     {
-        SceneManager.LoadScene("AK47");
-    }
+        // SceneManager.LoadScene("AK47");
+        StartCoroutine(Loading());
 
+    }
+    private IEnumerator Loading()
+    {
+        // print("測驗 1");
+        //     yield return new WaitForSeconds(2);
+        //print("測驗 2");
+
+        AsyncOperation ao = SceneManager.LoadSceneAsync("AK47");
+        ao.allowSceneActivation = false;
+
+        while (ao.isDone == false)
+        {
+            loadingText.text = ((ao.progress / 0.9f) * 100).ToString();
+            loading.value = ao.progress / 0.9f;
+            yield return new WaitForSeconds(0.0001f);
+
+            if (ao.progress == 0.9f && Input.anyKey) 
+            {
+                ao.allowSceneActivation = true;
+            }
+        }  
+    }
 }
