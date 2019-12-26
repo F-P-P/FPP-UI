@@ -26,13 +26,15 @@ public class GameManager : MonoBehaviour{
         StartCoroutine(Loading());
 
     }
+
+
     private IEnumerator Loading()
     {
         // print("測驗 1");
         //     yield return new WaitForSeconds(2);
         //print("測驗 2");
 
-        AsyncOperation ao = SceneManager.LoadSceneAsync("AK47");
+        AsyncOperation ao = SceneManager.LoadSceneAsync("GB");
         ao.allowSceneActivation = false;
 
         while (ao.isDone == false)
@@ -47,4 +49,16 @@ public class GameManager : MonoBehaviour{
             }
         }  
     }
+
+
+    public void Replay()
+    {
+        SceneManager.LoadScene("UI_01");
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
 }
